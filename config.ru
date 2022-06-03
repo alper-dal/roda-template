@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require 'dotenv'
-Dotenv.load
-
 dev = ENV['RACK_ENV'] == 'development'
 
 if dev
   require 'logger'
   logger = Logger.new($stdout)
+
+  require 'dotenv'
+  Dotenv.load
 end
 
 require 'rack/unreloader'
-Unreloader = Rack::Unreloader.new(subclasses: %w'Roda Sequel::Model', logger: logger, reload: dev){App}
+Unreloader = Rack::Unreloader.new(subclasses: %w[Roda Sequel::Model], logger: logger, reload: dev) { App }
 require_relative 'models'
-Unreloader.require('app.rb'){'App'}
+Unreloader.require('app.rb') { 'App' }
 run(dev ? Unreloader : App.freeze.app)
 
 # freeze_core = false
