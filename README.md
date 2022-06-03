@@ -11,6 +11,13 @@ createdb -U postgres -O [user_name] my_app_test
 createdb -U postgres -O [user_name] my_app_development
 ```
 
+Add `.env` file for environment variables.
+
+```
+RACK_ENV=development
+DATABASE_URL=postgres:///roda_development?user=alperdal
+```
+
 ## Migrations
 
 ```ruby
